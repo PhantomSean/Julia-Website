@@ -35,8 +35,21 @@ app.use(oidc.router);
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get('/home', (req, res) => {
+    res.send('<div><h1>Welcome!!</h1></div><a href="/login">Login</a>');
+});
+
+app.get('/admin', (req, res) => {
+    res.send('Admin page');
+});
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/home');
+});
+
 app.get('/', (req, res) => {
-    res.send('<h1>Welcome!!</h1>');
+    res.redirect('/home');
 });
 
 app.listen(port, () => console.log(`My Blog App is listening on port ${port}!`));
