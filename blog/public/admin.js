@@ -10,8 +10,16 @@ const AppNav = () => (
    </nav>
 );
 
+function imageCheck(image, title) {
+    if (image != "" ) {
+        return (
+            <img class="card-img-top" src={image} alt={title}></img>
+        )
+    }
+}
+
 const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) => {
-   const { title, content, editMode } = item;
+   const { image, title, content, editMode } = item;
 
    if (editMode) {
        return (
@@ -19,6 +27,9 @@ const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) =>
                <div class="card-body">
                    <form onSubmit={handleSubmit}>
                        <input type="hidden" name="id" value={item.id} />
+                       <div class="input-group input-group-sm mb-3">
+                           <input type="url" name="image" class="form-control" placeholder="Image URL" defaultValue={image} />
+                       </div>
                        <div class="input-group input-group-sm mb-3">
                            <input type="text" name="title" class="form-control" placeholder="Title" defaultValue={title} />
                        </div>
@@ -34,6 +45,7 @@ const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) =>
    } else {
        return (
            <div class="card mt-4" Style="width: 100%;">
+               {imageCheck(image, title)}
                <div class="card-body">
                    <h5 class="card-title">{title || "No Title"}</h5>
                    <p class="card-text">{content || "No Content"}</p>
@@ -66,6 +78,7 @@ class Admin extends React.Component {
        const data = this.state.data;
        data.unshift({
            editMode: true,
+           image: "",
            title: "",
            content: ""
        })
@@ -102,6 +115,7 @@ class Admin extends React.Component {
        const data = new FormData(event.target);
 
        const body = JSON.stringify({
+           image: data.get('image'),
            title: data.get('title'),
            content: data.get('content'),
        });

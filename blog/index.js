@@ -65,6 +65,7 @@ const database = new Sequelize({
 });
 
 const Post = database.define('posts', {
+    image: Sequelize.STRING,
     title: Sequelize.STRING,
     content: Sequelize.TEXT,
 });

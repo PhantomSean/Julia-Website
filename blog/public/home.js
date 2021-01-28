@@ -20,11 +20,20 @@ const AppNav = () => (
    </nav>
 );
 
+function imageCheck(image, title) {
+    if (image != "" ) {
+        return (
+            <img class="card-img-top" src={image} alt={title}></img>
+        )
+    }
+}
+
 const Card = ({ item }) => {
-    const { title, content } = item;
+    const { image, title, content } = item;
 
     return (  
         <div class="card mt-4" Style="width: 100%;">
+            {imageCheck(image, title)}
             <div class="card-body">
                 <h5 class="card-title">{title || "No Title"}</h5>
                 <p class="card-text">{content || "No Content"}</p>
@@ -46,7 +55,6 @@ class Home extends React.Component {
     getPosts = async () => {
         const response = await fetch('/posts');
         const data = await response.json();
-        data.forEach(item => item.editMode = false);
         this.setState({ data })
     }
 
