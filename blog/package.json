@@ -17,6 +17,7 @@
     "epilogue": "^0.7.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "finale-rest": "^1.1.1",
     "sequelize": "^5.22.3",
     "sqlite3": "^5.0.0"
   },
