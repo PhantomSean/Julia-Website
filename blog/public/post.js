@@ -23,59 +23,60 @@ const AppNav = () => (
 function imageCheck(image, title) {
     if (image != "" ) {
         return (
-            <img class="card-img-top" src={image} alt={title}></img>
+            <img class="rounded float-right" src={image} alt={title}></img>
         )
     }
 }
 
 function readLink(id) {
-    var strLink= "/post/id="+id;
+    var strLink= "/posts/"+id;
     return strLink;
 }
 
-const Card = ({ item }) => {
-    const { id, image, title, blurb } = item;
+const Blog = ({ item }) => {
+    const { image, title, content } = item;
 
     return (  
-        <div class="card mt-4" Style="width: 100%;">
+        <div>
             {imageCheck(image, title)}
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title mt-auto mb-auto pb-3">{title || "No Title"}</h5>
-                <p class="card-text mt-auto mb-auto pb-3">{blurb || "No Content"}</p>
-                <a role="button" class="btn btn-info btn-md mr-auto mt-auto" href={readLink(id)}>Read More</a>
-            </div>
+            <h1>{title || "No Title"}</h1>
+            {content || "No Content"}
+            
         </div>
     )
 }
 
-class Home extends React.Component {
+function getUrlVar() {
+    var str = window.location.href;
+    var pair = str.split("=");
+    return pair[1]
+}
+
+class Post extends React.Component {
     constructor(props) {
        super(props);
-       this.state = { data: [] };
+       this.state = { data : [] };
     }
 
     componentDidMount() {
-        this.getPosts();
+        this.getPost();
     }
 
-    getPosts = async () => {
-        const response = await fetch('/posts');
+    getPost = async () => {
+        const response = await fetch('/posts/'+getUrlVar());
         const data = await response.json();
-        this.setState({ data })
+        this.setState({ data : [data] });
     }
 
    render() {
        return (
         <div>
             <AppNav />
-            <div class="container">
-                <div class="row">
+            <div class="container" id="blog-content">
                     {
                         this.state.data.length > 0 ? (
                             this.state.data.map(item =>
-                                <div class="col-sm-6 d-flex align-items-stretch">
-                                    <Card item={item}/>
-                                </div>
+                                    <Blog item={item}/>
                             )
                         ) : (
                                 <div class="card mt-5 col-sm">
@@ -84,7 +85,6 @@ class Home extends React.Component {
                             )
                     }
                 </div>
-            </div>
         </div>
        )
    }
@@ -92,4 +92,4 @@ class Home extends React.Component {
 }
 
 const domContainer = document.querySelector('#root');
-ReactDOM.render(e(Home), domContainer);
+ReactDOM.render(e(Post), domContainer);

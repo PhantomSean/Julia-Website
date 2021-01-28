@@ -40,6 +40,9 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/post/id=:id', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/post.html'));
+});
 
 app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, './public/home.html'));
@@ -67,6 +70,7 @@ const database = new Sequelize({
 const Post = database.define('posts', {
     image: Sequelize.STRING,
     title: Sequelize.STRING,
+    blurb: Sequelize.TEXT,
     content: Sequelize.TEXT,
 });
 
@@ -76,17 +80,6 @@ const PostResource = finale.resource({
     model: Post,
     endpoints: ['/posts', '/posts/:id']
 });
-
-// function security(req, res, context) {
-//     return new Promise(function (resolve, reject) {
-//         if (!req.isAuthenticated()) {
-//             res.status(401).send({ message: "Unauthorized" });
-//             resolve(context.stop);
-//         } else {
-//             resolve(context.continue);
-//         }
-//     })
-// }
 
 PostResource.create.auth(function (req, res, context) {
     return new Promise(function (resolve, reject) {

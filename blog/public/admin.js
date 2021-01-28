@@ -19,7 +19,7 @@ function imageCheck(image, title) {
 }
 
 const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) => {
-   const { image, title, content, editMode } = item;
+   const { image, title, blurb, content, editMode } = item;
 
    if (editMode) {
        return (
@@ -32,6 +32,9 @@ const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) =>
                        </div>
                        <div class="input-group input-group-sm mb-3">
                            <input type="text" name="title" class="form-control" placeholder="Title" defaultValue={title} />
+                       </div>
+                       <div class="input-group input-group-sm mb-3">
+                           <textarea name="blurb" class="form-control" placeholder="Blurb" defaultValue={blurb}></textarea>
                        </div>
                        <div class="input-group input-group-sm mb-3">
                            <textarea name="content" class="form-control" placeholder="Content" defaultValue={content}></textarea>
@@ -48,6 +51,7 @@ const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) =>
                {imageCheck(image, title)}
                <div class="card-body">
                    <h5 class="card-title">{title || "No Title"}</h5>
+                   <p class="card-text">{blurb || "No Blurb"}</p>
                    <p class="card-text">{content || "No Content"}</p>
                    <button type="button" class="btn btn-outline-danger btn-sm" onClick={handleDelete}>Delete</button>
                    <button type="submit" class="btn btn-info btn-sm ml-2" onClick={handleEdit}>Edit</button>
@@ -80,6 +84,7 @@ class Admin extends React.Component {
            editMode: true,
            image: "",
            title: "",
+           blurb: "",
            content: ""
        })
        this.setState({ data })
@@ -117,6 +122,7 @@ class Admin extends React.Component {
        const body = JSON.stringify({
            image: data.get('image'),
            title: data.get('title'),
+           blurb: data.get('blurb'),
            content: data.get('content'),
        });
 
