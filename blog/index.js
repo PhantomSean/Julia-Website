@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
 const Sequelize = require('sequelize');
+const { resolve } = require('path');
 const finale = require('finale-rest'), ForbiddenError = finale.Errors.ForbiddenError;
 const app = express();
 const port = 3000;
@@ -72,10 +73,43 @@ finale.initialize({ app, sequelize: database });
 
 const PostResource = finale.resource({
     model: Post,
-    endpoints: ['/posts', '/posts/:id'],
+    endpoints: ['/posts', '/posts/:id']
 });
 
-PostResource.all.auth(function (req, res, context) {
+// function security(req, res, context) {
+//     return new Promise(function (resolve, reject) {
+//         if (!req.isAuthenticated()) {
+//             res.status(401).send({ message: "Unauthorized" });
+//             resolve(context.stop);
+//         } else {
+//             resolve(context.continue);
+//         }
+//     })
+// }
+
+PostResource.create.auth(function (req, res, context) {
+    return new Promise(function (resolve, reject) {
+        if (!req.isAuthenticated()) {
+            res.status(401).send({ message: "Unauthorized" });
+            resolve(context.stop);
+        } else {
+            resolve(context.continue);
+        }
+    })
+});
+
+PostResource.update.auth(function (req, res, context) {
+    return new Promise(function (resolve, reject) {
+        if (!req.isAuthenticated()) {
+            res.status(401).send({ message: "Unauthorized" });
+            resolve(context.stop);
+        } else {
+            resolve(context.continue);
+        }
+    })
+});
+
+PostResource.delete.auth(function (req, res, context) {
     return new Promise(function (resolve, reject) {
         if (!req.isAuthenticated()) {
             res.status(401).send({ message: "Unauthorized" });
