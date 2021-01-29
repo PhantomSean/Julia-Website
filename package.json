@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
+    "predeploy": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sean Stewart",
@@ -22,6 +23,8 @@
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
+    "gh-pages": "^3.1.0",
     "nodemon": "^1.18.9"
-  }
+  },
+  "homepage": "http://PhantomSean.github.io/Julia-Blog"
 }
