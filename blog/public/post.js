@@ -40,8 +40,7 @@ const Blog = ({ item }) => {
         <div>
             {imageCheck(image, title)}
             <h1>{title || "No Title"}</h1>
-            {content || "No Content"}
-            
+            <p dangerouslySetInnerHTML={{ __html: content} || "No Content"}></p>
         </div>
     )
 }

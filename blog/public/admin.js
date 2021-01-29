@@ -51,8 +51,8 @@ const Card = ({ item, handleSubmit, handleEdit, handleDelete, handleCancel }) =>
                {imageCheck(image, title)}
                <div class="card-body">
                    <h5 class="card-title">{title || "No Title"}</h5>
-                   <p class="card-text">{blurb || "No Blurb"}</p>
-                   <p class="card-text">{content || "No Content"}</p>
+                   <p class="card-text" dangerouslySetInnerHTML={{ __html: blurb} || "No Blurb"}></p>
+                   <p class="card-text" dangerouslySetInnerHTML={{ __html: content} || "No Content"}></p>
                    <button type="button" class="btn btn-outline-danger btn-sm" onClick={handleDelete}>Delete</button>
                    <button type="submit" class="btn btn-info btn-sm ml-2" onClick={handleEdit}>Edit</button>
                </div>
@@ -82,10 +82,10 @@ class Admin extends React.Component {
        const data = this.state.data;
        data.unshift({
            editMode: true,
-           image: "",
-           title: "",
-           blurb: "",
-           content: ""
+           image: '',
+           title: '',
+           blurb: '',
+           content: ''
        })
        this.setState({ data })
    }

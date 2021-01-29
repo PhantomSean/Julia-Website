@@ -41,7 +41,7 @@ const Card = ({ item }) => {
             {imageCheck(image, title)}
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title mt-auto mb-auto pb-3">{title || "No Title"}</h5>
-                <p class="card-text mt-auto mb-auto pb-3">{blurb || "No Content"}</p>
+                <p class="card-text mt-auto mb-auto pb-3" dangerouslySetInnerHTML={{ __html: blurb} || "No Blurb"}></p>
                 <a role="button" class="btn btn-info btn-md mr-auto mt-auto" href={readLink(id)}>Read More</a>
             </div>
         </div>
